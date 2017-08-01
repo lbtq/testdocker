@@ -22,7 +22,7 @@ node {
         slackSend color: "danger", message: "Docker dev port test failed: ${identifier}"
       }
     }
-    image.inside('-p 8086:8085 -e TESTONE -e TESTTWO') {c ->
+    image.inside('-p 8086:8085 -e TESTONE=blahhone -e TESTTWO=blahhtwo') {c ->
       try {
 	sh "echo $TESTONE"
       }
