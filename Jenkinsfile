@@ -21,7 +21,7 @@ node {
       catch (exc) {
         slackSend color: "danger", message: "Docker dev port test failed: ${identifier}"
       }
-      sh "echo $TESTONE\n${TESTTWO}"
+      sh "echo ${TESTONE}\n${TESTTWO}"
     }
   }
 }
