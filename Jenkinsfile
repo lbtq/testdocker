@@ -13,7 +13,7 @@ node {
     }
   }
   stage ('Docker Test') {
-    image.withRun('-p 8086:8085 -e TESTONE -e TESTTWO') {c ->
+    image.withRun('-p 8086:8085') {c ->
       try {
         sh "nc -z 127.0.0.1 8086"
         slackSend color: "good", message: "Docker dev port test succeeded: ${identifier}"
@@ -21,7 +21,20 @@ node {
       catch (exc) {
         slackSend color: "danger", message: "Docker dev port test failed: ${identifier}"
       }
-      sh "echo ${TESTONE}\n${TESTTWO}"
+    }
+    image.inside('-p 8086:8085 -e TESTONE -e TESTTWO') {c ->
+      try {
+	sh "echo $TESTONE"
+      }
+      catch (exc) {
+	sh "echo TESTONE not defined"
+      }
+      try {
+	sh "echo ${TESTTWO}"
+      }
+      catch (exc) {
+	sh "echo TESTTWO not defined"
+      }
     }
   }
 }
