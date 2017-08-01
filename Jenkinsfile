@@ -1,11 +1,11 @@
 #!/usr/bin/env groovy
 
 node {
-  identifier = "Docker Test Service - Dev"
+  identifier = "Docker Test Service - $BRANCH_NAME"
   checkout scm
   stage ('Docker build') {
     try {
-      image = docker.build('docker-test:dev')
+      image = docker.build('docker-test:$BRANCH_NAME')
       slackSend color: "good", message: "Docker dev build succeeded: ${identifier}"
     }
     catch (exc) {
