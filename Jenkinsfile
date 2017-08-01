@@ -13,7 +13,7 @@ node {
     }
   }
   stage ('Docker Test') {
-    image.withRun('-p 8086:8085 -e TESTONE=blahhh') {c ->
+    image.withRun('-p 8086:8085') {c ->
       try {
         sh "nc -z 127.0.0.1 8086"
         slackSend color: "good", message: "Docker dev port test succeeded: ${identifier}"
