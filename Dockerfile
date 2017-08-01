@@ -4,7 +4,6 @@ RUN apt-get update -y
 RUN apt-get install -y python
 COPY . /httpserver
 WORKDIR /httpserver
-ADD script.sh /httpserver/script.sh
-CMD ["./script.sh"]
+RUN sh -c "echo ${TESTONE}"
 ENTRYPOINT ["python"]
 CMD ["test.py"]
