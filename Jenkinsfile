@@ -34,7 +34,7 @@ node {
 	}
       }
       catch (exc) {
-	sh "echo blah"
+	sh "echo Nope - ${exc}"
       }
     }
   }
