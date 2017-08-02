@@ -23,7 +23,14 @@ node {
       }
       try {
 	def port = c.port(8085).split(':')[1]
-	sh "curl http://127.0.0.1:${port}/index.html"
+	sh "curl -s http://127.0.0.1:${port}/index.html > tmpCrl"
+	curlOut = readFile 'tmpCrl'
+	sh "rm -f tmpCrl"
+	if(curlOut.contains.("OK")) {
+	  assert true
+	} else {
+	  assert false
+	}
       }
       catch (exc) {
 	sh "echo blah"
