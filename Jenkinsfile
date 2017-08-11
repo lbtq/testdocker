@@ -14,7 +14,7 @@ node {
   stage ('Docker push') {
     try {
       docker.withRegistry('https://024673053271.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-test') {
-        image.push('${BRANCH_NAME}_latest')
+        image.push('${BRANCH_NAME}_new')
       }
     } catch (exc) {
       echo "nope"
