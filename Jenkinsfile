@@ -1,26 +1,23 @@
 #!/usr/bin/env groovy
 
 node {
-  identifier = "Docker Test Service - Master"
+  identifier = "Docker Test Service - $BRANCH_NAME"
   checkout scm
   stage ('Docker build') {
     try {
-      image = docker.build('docker-test:master')
-      slackSend color: "good", message: "Docker master build succeeded: ${identifier} - ${testvar}"
+      image = docker.build('testdocker:$BRANCH_NAME')
     }
     catch (exc) {
-      slackSend color: "danger", message: "Docker master build failed: ${identifier} - ${testvar}"
+      echo "nope"
     }
   }
-  stage ('Docker Test') {
-    image.withRun('-p 8085:8085') {c ->
-      try {
-        sh "nc -z 127.0.0.1 8085"
-        slackSend color: "good", message: "Docker master port test succeeded: ${identifier} - ${testvar}"
+  stage ('Docker push') {
+    try {
+      docker.withRegistry('https://024673053271.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-test') {
+        image.push('${BRANCH_NAME}_new')
       }
-      catch (exc) {
-        slackSend color: "danger", message: "Docker master port test failed: ${identifier} - ${testvar}"
-      }
+    } catch (exc) {
+      echo "nope"
     }
   }
 }
