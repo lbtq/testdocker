@@ -10,7 +10,7 @@ node {
   tag = "${BRANCH_NAME}_${git_hash}"
   stage ('Docker build') {
     try {
-      image = docker.build("testdocker:$tag")
+      image = docker.build("\'testdocker:$tag\'")
     }
     catch (exc) {
       echo "nope"
