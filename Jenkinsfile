@@ -10,7 +10,7 @@ node {
   tag = "${BRANCH_NAME}_${git_hash}"
   stage ('Docker build') {
     try {
-      image = docker.build("testdocker:${tag}")
+      image = docker.build('testdocker:${tag}')
     }
     catch (exc) {
       echo "nope"
@@ -19,7 +19,7 @@ node {
   stage ('Docker push') {
     try {
       docker.withRegistry('https://024673053271.dkr.ecr.us-west-2.amazonaws.com', 'ecr:us-west-2:aws-test') {
-        image.push("${tag}")
+        image.push('${tag}')
       }
     } catch (exc) {
       echo "nope"
