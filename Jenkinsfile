@@ -7,7 +7,7 @@ node {
   git_hash = readFile 'git_hash'
   sh "rm -f git_hash"
   identifier = "Docker Test Service:$BRANCH_NAME - Commit: ${git_hash}"
-  tag = "$BRANCH_NAME_${git_hash}"
+  tag = "${BRANCH_NAME}_${git_hash}"
   stage ('Docker build') {
     try {
       image = docker.build('testdocker:$tag')
