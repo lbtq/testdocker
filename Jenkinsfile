@@ -33,7 +33,7 @@ node {
   stage('Get K8S') {
     dir('K8S_CONFIGS') {
       git branch: 'tmpbranch', credentialsId: '63bb2ae2-08c3-4702-bc61-bf6f04405d2e', url: 'https://github.com/butter/kubernetes.git'
-      sh "sed -i -r 's/(image:.*${imagename}:).*\$/\1${tag}/g\' k8-stage/${imagename}-deployment.yaml"
+      sh "sed -i -r 's/(image:.*${imagename}:).*\$/\\1${tag}/g\' k8-stage/${imagename}-deployment.yaml"
     }
   }
 }
