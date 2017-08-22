@@ -31,6 +31,9 @@ node {
     }
   }
   stage('Deploy Dev') {
+    dir('K8S_CONFIGS') {
+      deleteDir()
+    }
     if (env.BRANCH_NAME == "dev") {
       dir('K8S_CONFIGS') {
         git branch: 'tmpbranch', credentialsId: '63bb2ae2-08c3-4702-bc61-bf6f04405d2e', url: 'https://github.com/butter/kubernetes.git'
