@@ -1,6 +1,1 @@
-# testdocker
-Change
-Dev 1.0
-BLAH
-aaaa
-test
+2.0.0
