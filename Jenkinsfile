@@ -7,6 +7,7 @@ node {
   git_hash = readFile('git_hash').trim()
   sh "rm -f git_hash"
   identifier = "Docker Test Service:$BRANCH_NAME - Commit: ${git_hash}"
+  imagename = "butter-nlp"
   if (env.BRANCH_NAME == "dev") {
     tag = "${BRANCH_NAME}_${git_hash}"
   } else {
@@ -27,6 +28,15 @@ node {
       }
     } catch (exc) {
       echo "nope"
+    }
+  }
+  stage('Deploy Dev') {
+    if (env.BRANCH_NAME == "dev") {
+      dir('K8S_CONFIGS') {
+        git branch: 'tmpbranch', credentialsId: '63bb2ae2-08c3-4702-bc61-bf6f04405d2e', url: 'https://github.com/butter/kubernetes.git'
+        sh "sed -i -r 's/(image:.*${imagename}:).*\$/\\1${tag}/g\' k8-stage/${imagename}-deployment.yaml"
+	sh "kubectl get pods --namespace dev > kube.out"
+      }
     }
   }
 }
