@@ -7,7 +7,7 @@ node {
   git_hash = readFile('git_hash').trim()
   sh "rm -f git_hash"
   identifier = "Docker Test Service:$BRANCH_NAME - Commit: ${git_hash}"
-  imagename = "butter-nlp"
+  imagename = "testdocker"
   if (env.BRANCH_NAME == "dev") {
     tag = "${BRANCH_NAME}_${git_hash}"
   } else {
